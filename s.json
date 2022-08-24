@@ -1,0 +1,331 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "DocuNovaSyncService API",
+    "version": "v1"
+  },
+  "paths": {
+    "/CommunalFees/AddNewRequest": {
+      "post": {
+        "tags": [
+          "CommunalFees"
+        ],
+        "summary": "Create a new request in the DocuNova application",
+        "requestBody": {
+          "description": "Request data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestResponseModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestResponseModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddressModel": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string",
+            "description": "Country name",
+            "nullable": true
+          },
+          "municipality": {
+            "type": "string",
+            "description": "Municipality name",
+            "nullable": true
+          },
+          "place": {
+            "type": "string",
+            "description": "Place name",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "description": "Street name",
+            "nullable": true
+          },
+          "streetNumber": {
+            "type": "string",
+            "description": "Street number",
+            "nullable": true
+          },
+          "postCode": {
+            "type": "string",
+            "description": "Post code",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Addres data"
+      },
+      "AdministrativeDecisionModel": {
+        "type": "object",
+        "properties": {
+          "identificationNumber": {
+            "type": "string",
+            "description": "Administrative decision identification number",
+            "nullable": true
+          },
+          "dateOfIssue": {
+            "type": "string",
+            "description": "Date of issue",
+            "format": "date-time"
+          },
+          "docuNovaRequestId": {
+            "type": "integer",
+            "description": "Request Id in DocuNova application",
+            "format": "int32",
+            "nullable": true
+          },
+          "ordinal": {
+            "type": "string",
+            "description": "Decision ordinal number",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Administrative decision data"
+      },
+      "ContactDataModel": {
+        "type": "object",
+        "properties": {
+          "emailAddress": {
+            "type": "string",
+            "description": "Email",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "Phone number",
+            "nullable": true
+          },
+          "mobilePhoneNumber": {
+            "type": "string",
+            "description": "Mobile phone number",
+            "nullable": true
+          },
+          "faxNumber": {
+            "type": "string",
+            "description": "Fax number",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Contact information"
+      },
+      "LegalEntityModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Legal entity name",
+            "nullable": true
+          },
+          "identificationNumber": {
+            "type": "string",
+            "description": "Legal entity identification number",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Legal entity data"
+      },
+      "NaturalPersonModel": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "First name",
+            "nullable": true
+          },
+          "parentName": {
+            "type": "string",
+            "description": "Parent name",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name",
+            "nullable": true
+          },
+          "jmbg": {
+            "type": "string",
+            "description": "Jmbg",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Natural person data"
+      },
+      "ObligerModel": {
+        "type": "object",
+        "properties": {
+          "isPhysicalEntity": {
+            "type": "boolean",
+            "description": "The obligor is a natural person"
+          },
+          "naturalPerson": {
+            "$ref": "#/components/schemas/NaturalPersonModel"
+          },
+          "legalEntity": {
+            "$ref": "#/components/schemas/LegalEntityModel"
+          },
+          "contactData": {
+            "$ref": "#/components/schemas/ContactDataModel"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressModel"
+          },
+          "docuNovaClientId": {
+            "type": "integer",
+            "description": "Clinet id in DocuNova application",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Obliger data"
+      },
+      "RequestModel": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "nullable": true
+          },
+          "method": {
+            "type": "string",
+            "default": "GET",
+            "nullable": true
+          },
+          "relations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "routeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "routeValues": {
+            "nullable": true
+          },
+          "administrativeDecision": {
+            "$ref": "#/components/schemas/AdministrativeDecisionModel"
+          },
+          "obliger": {
+            "$ref": "#/components/schemas/ObligerModel"
+          },
+          "fileName": {
+            "type": "string",
+            "description": "File name",
+            "nullable": true
+          },
+          "file": {
+            "type": "string",
+            "description": "File content",
+            "format": "byte",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request data"
+      },
+      "RequestResponseModel": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "clientId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
